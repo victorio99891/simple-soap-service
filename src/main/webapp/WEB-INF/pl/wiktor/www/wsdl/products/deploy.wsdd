@@ -1,0 +1,50 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ProductServicePortService WSDL service -->
+
+  <service name="ProductServicePortSoap11" provider="java:RPC" style="document" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://www.wiktor.pl/wsdl/products"/>
+      <parameter name="wsdlServiceElement" value="ProductServicePortService"/>
+      <parameter name="schemaQualified" value="http://www.wiktor.pl/wsdl/products"/>
+      <parameter name="wsdlServicePort" value="ProductServicePortSoap11"/>
+      <parameter name="className" value="pl.wiktor.www.wsdl.products.ProductServicePortSoap11Skeleton"/>
+      <parameter name="wsdlPortType" value="ProductServicePort"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <parameter name="allowedMethods" value="*"/>
+
+      <typeMapping
+        xmlns:ns="http://www.wiktor.pl/wsdl/products"
+        qname="ns:>getSingleProductRequest"
+        type="java:pl.wiktor.www.wsdl.products.GetSingleProductRequest"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.wiktor.pl/wsdl/products"
+        qname="ns:>getSingleProductResponse"
+        type="java:pl.wiktor.www.wsdl.products.GetSingleProductResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://www.wiktor.pl/wsdl/products"
+        qname="ns:productSOAP"
+        type="java:pl.wiktor.www.wsdl.products.ProductSOAP"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:sch="http://www.wiktor.pl/wsdl/products" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.wiktor.pl/wsdl/products" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.wiktor.pl/wsdl/products">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.wiktor.pl/wsdl/products">
+
+
+	<xs:element name="getSingleProductRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:int"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="getSingleProductResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="product" type="tns:productSOAP"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:complexType name="productSOAP">
+		<xs:sequence>
+			<xs:element name="id" type="xs:int"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="price" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="serviceStatus">
+		<xs:sequence>
+			<xs:element name="statusCode" type="xs:string"/>
+			<xs:element name="message" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getSingleProductResponse">
+    <wsdl:part element="tns:getSingleProductResponse" name="getSingleProductResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSingleProductRequest">
+    <wsdl:part element="tns:getSingleProductRequest" name="getSingleProductRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ProductServicePort">
+    <wsdl:operation name="getSingleProduct">
+      <wsdl:input message="tns:getSingleProductRequest" name="getSingleProductRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getSingleProductResponse" name="getSingleProductResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProductServicePortSoap11" type="tns:ProductServicePort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getSingleProduct">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getSingleProductRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSingleProductResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductServicePortService">
+    <wsdl:port binding="tns:ProductServicePortSoap11" name="ProductServicePortSoap11">
+      <soap:address location="http://localhost:8085/product-soap/services/ProductServicePortSoap11"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
